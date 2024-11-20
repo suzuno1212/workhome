@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %}お問い合わせ - 高齢者福祉相談サービス{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 p-md-5">
+                    <h1 class="text-center mb-4">お問い合わせ</h1>
+
+                    <!-- 説明文セクション -->
+                    <div class="alert alert-info mb-4">
+                        <h5 class="alert-heading"><i class="bi bi-info-circle"></i> お問い合わせについて</h5>
+                        <p class="mb-0">
+                            介護や福祉に関するご相談を受け付けております。<br>
+                            専門のスタッフが丁寧にご対応させていただきます。
+                        </p>
+                    </div>
+
+                    {% if error %}
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle"></i> {{ error }}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" class="needs-validation" novalidate>
+                        <!-- お名前 -->
+                        <div class="mb-4">
+                            <label for="name" class="form-label h6">
+                                <i class="bi bi-person"></i> お名前
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control form-control-lg"
+                                   id="name" name="name" required
+                                   placeholder="例：山田 太郎"
+                                   value="{{ form_data.name }}">
+                            <div class="form-text">ご相談者様のお名前をご入力ください</div>
+                        </div>
+
+                        <!-- メールアドレス -->
+                        <div class="mb-4">
+                            <label for="email" class="form-label h6">
+                                <i class="bi bi-envelope"></i> メールアドレス
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="email" class="form-control form-control-lg"
+                                   id="email" name="email" required
+                                   placeholder="例：yamada@example.com"
+                                   value="{{ form_data.email }}">
+                            <div class="form-text">ご返信先のメールアドレスをご入力ください</div>
+                        </div>
+
+                        <!-- 電話番号 -->
+                        <div class="mb-4">
+                            <label for="phone" class="form-label h6">
+                                <i class="bi bi-telephone"></i> 電話番号（任意）
+                            </label>
+                            <input type="tel" class="form-control form-control-lg"
+                                   id="phone" name="phone"
+                                   placeholder="例：090-1234-5678"
+                                   value="{{ form_data.phone }}">
+                        </div>
+
+                        <!-- お問い合わせ内容 -->
+                        <div class="mb-4">
+                            <label for="message" class="form-label h6">
+                                <i class="bi bi-chat-text"></i> お問い合わせ内容
+                                <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control form-control-lg"
+                                      id="message" name="message" rows="6" required
+                                      placeholder="ご相談内容をご記入ください">{{ form_data.message }}</textarea>
+                            <div class="form-text">具体的な状況やご要望をお書きください</div>
+                        </div>
+
+                        <!-- 相談カテゴリー -->
+                        <div class="mb-4">
+                            <label class="form-label h6">
+                                <i class="bi bi-tag"></i> ご相談の種類
+                            </label>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="inquiry_type_care" name="inquiry_type_care" value="true">
+                                        <label class="form-check-label" for="inquiry_type_care">介護サービスについて</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="inquiry_type_facility" name="inquiry_type_facility" value="true">
+                                        <label class="form-check-label" for="inquiry_type_facility">施設について</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="inquiry_type_cost" name="inquiry_type_cost" value="true">
+                                        <label class="form-check-label" for="inquiry_type_cost">費用について</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="inquiry_type_other" name="inquiry_type_other" value="true">
+                                        <label class="form-check-label" for="inquiry_type_other">その他</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 画像認証 -->
+                        <div class="mb-4">
+                            <label class="form-label h6">
+                                <i class="bi bi-shield-lock"></i> 画像認証
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <div class="captcha" id="captchaContainer">
+                                    {{ captcha() | safe }}
+                                </div>
+                                <button type="button" class="btn btn-outline-secondary refresh-captcha" id="refreshCaptcha">
+                                    <i class="bi bi-arrow-clockwise"></i> 更新
+                                </button>
+                            </div>
+                            <input type="text" class="form-control form-control-lg" name="captcha" required
+                                   placeholder="上の画像に表示されている文字を入力してください">
+                        </div>
+
+                        <!-- プライバシーポリシー -->
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="privacy" required>
+                                <label class="form-check-label" for="privacy">
+                                    プライバシーポリシーに同意する
+                                    <span class="text-danger">*</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 送信ボタン -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-send"></i> 送信する
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- サイドバー：お問い合わせ補足情報 -->
+        <div class="col-lg-4">
+            <div class="sticky-top" style="top: 2rem;">
+                <!-- よくある質問 -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-question-circle"></i> よくあるご質問
+                        </h5>
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item border-0">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#faq1"
+                                            aria-expanded="false"
+                                            aria-controls="faq1">
+                                        相談は無料ですか？
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse"
+                                     data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        はい、初回相談は無料です。お気軽にご相談ください。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#faq2"
+                                            aria-expanded="false"
+                                            aria-controls="faq2">
+                                        返信までどのくらいかかりますか？
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse"
+                                     data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        通常2営業日以内にご返信いたします。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

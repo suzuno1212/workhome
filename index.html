@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}高齢者福祉相談サービス{% endblock %}
+
+{% block content %}
+<div class="hero-section bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 class="display-4 fw-bold mb-4">高齢者の暮らしを<br>もっと豊かに</h1>
+                <p class="lead mb-4">
+                    介護や福祉に関するお悩みを、専門スタッフが丁寧にサポートいたします。
+                </p>
+                <div class="d-grid gap-3 d-sm-flex">
+                    <a href="{{ url_for('inquiry') }}" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-envelope"></i> 簡単お問い合わせ
+                    </a>
+                    <a href="{{ url_for('register') }}" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="bi bi-person-plus"></i> 新規登録
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/elderly-care.png') }}"
+                         alt="高齢者福祉"
+                         class="img-fluid rounded shadow hero-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="features-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">サービスの特徴</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-chat-dots text-primary display-4 mb-3"></i>
+                        <h3 class="card-title h5">簡単お問い合わせ</h3>
+                        <p class="card-text">
+                            専用フォームからご相談いただけます。
+                            初めての方でもお気軽にご利用ください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-image text-primary display-4 mb-3"></i>
+                        <h3 class="card-title h5">画像でのご相談</h3>
+                        <p class="card-text">
+                            会員登録後は、画像付きでのご相談が可能に。
+                            より具体的な状況をお伝えいただけます。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cta-section bg-light py-5">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-8">
+                <h2 class="mb-4">まずは無料でご相談ください</h2>
+                <p class="lead mb-4">
+                    介護や福祉に関する不安やお悩み、些細なことでもお気軽にご相談ください。
+                    経験豊富なスタッフが、親身になってサポートいたします。
+                </p>
+                <a href="{{ url_for('inquiry') }}" class="btn btn-primary btn-lg px-5">
+                    お問い合わせはこちら
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="benefits-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">会員登録のメリット</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="d-flex align-items-start">
+                    <i class="bi bi-check-circle-fill text-primary me-3 fs-4"></i>
+                    <div>
+                        <h3 class="h5">画像付きでの詳細相談</h3>
+                        <p>介護用品や住環境について、画像を添付してより具体的にご相談いただけます。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex align-items-start">
+                    <i class="bi bi-check-circle-fill text-primary me-3 fs-4"></i>
+                    <div>
+                        <h3 class="h5">相談履歴の管理</h3>
+                        <p>過去のご相談内容や回答を簡単に確認できます。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

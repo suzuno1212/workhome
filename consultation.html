@@ -1,0 +1,137 @@
+{% extends "base_member.html" %}
+{% block title %}相談履歴{% endblock %}
+
+{% block content %}
+<div class="consultation-container">
+    <!-- 相談履歴表示エリア -->
+    <div class="consultation-history" id="consultationHistory">
+        {% for consultation in consultations %}
+        <div class="consultation-card mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span class="badge {% if consultation.status == '未回答' %}bg-warning{% elif consultation.status == '対応中' %}bg-info{% else %}bg-success{% endif %}">
+                        {{ consultation.status }}
+                    </span>
+                    <small class="text-muted">{{ consultation.created_at.strftime('%Y年%m月%d日 %H時%M分') }}</small>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ consultation.content }}</p>
+                    {% if consultation.image_paths %}
+                    <div class="consultation-images">
+                        {% for image_path in consultation.image_paths.split(',') if image_path %}
+                        <img src="{{ url_for('static', filename=image_path.strip()) }}"
+                             class="img-thumbnail consultation-image"
+                             alt="添付画像"
+                             onclick="showImageModal(this.src)">
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% for response in consultation.responses %}
+            {% if response.is_active %}
+            <div class="card response-card ms-4 mt-2">
+                <div class="card-body">
+                    <p class="card-text">{{ response.response_content }}</p>
+                    <div class="text-end">
+                        <small class="text-muted">回答日時：{{ response.created_at.strftime('%Y年%m月%d日 %H時%M分') }}</small>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- 新規相談ボタン -->
+    <div class="new-consultation-button">
+        <button type="button" class="btn btn-primary rounded-circle" data-bs-toggle="modal" data-bs-target="#newConsultationModal">
+            <i class="bi bi-plus-lg"></i>
+        </button>
+    </div>
+
+    <!-- 相談フォームモーダル -->
+    <div class="modal fade" id="newConsultationModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">相談受付フォーム</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="consultationForm" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="consultationContent" class="form-label">相談内容</label>
+                            <textarea class="form-control" id="consultationContent" name="content" rows="5" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="consultationImages" class="form-label">画像添付（複数可）</label>
+                            <input type="file" class="form-control" id="consultationImages" name="images" multiple accept="image/*">
+                            <div id="imagePreview" class="mt-2 d-flex flex-wrap gap-2"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                        <button type="submit" class="btn btn-primary" id="submitButton">送信</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 画像拡大モーダル -->
+    <div class="modal fade" id="imageModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <img id="modalImage" src="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .consultation-container {
+        position: relative;
+        height: calc(100vh - 70px);
+        padding-bottom: 80px;
+    }
+
+    .consultation-history {
+        height: 100%;
+        overflow-y: auto;
+        padding: 20px;
+    }
+
+    .new-consultation-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+        .new-consultation-button .btn {
+            width: 60px;
+            height: 60px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+    .consultation-image {
+        max-width: 200px;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    .response-card {
+        border-left: 4px solid #28a745;
+    }
+
+    #imagePreview img {
+        max-width: 100px;
+        height: auto;
+    }
+</style>
+{% endblock %}

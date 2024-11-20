@@ -1,0 +1,54 @@
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, .8);
+}
+
+    .navbar-dark .navbar-nav .nav-link.active {
+        color: #00ff00;
+    }
+
+.captcha {
+    display: inline-block;
+}
+
+.refresh-captcha {
+    margin-left: 10px;
+}
+.hero-image {
+    /* 以下のエフェクトを必要に応じて調整 */
+    filter: brightness(0.95) /* 明るさを少し下げる */
+    contrast(0.95) /* コントラストを少し下げる */
+    opacity(0.9); /* 透明度を設定 */
+    transition: all 0.3s ease; /* エフェクトをスムーズに */
+    width: 50%; /* 元のサイズの2/3 */
+    margin: 0 auto; /* 中央揃え */
+}
+
+    /* オプション：ホバー時のエフェクト */
+    .hero-image:hover {
+        filter: brightness(1) contrast(1) opacity(1);
+    }
+
+/* 画像を包む要素にグラデーションオーバーレイを追加 */
+.hero-section {
+    position: relative;
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+}
+
+/* 画像コンテナ */
+.image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+    /* オーバーレイエフェクト */
+    .image-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        pointer-events: none;
+    }

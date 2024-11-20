@@ -1,0 +1,63 @@
+{% extends "base_member.html" %}
+{% block title %}会員ホーム - 高齢者福祉相談サービス{% endblock %}
+
+{% block content %}
+<div class="hero-section bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="display-4 fw-bold mb-4">ようこそ、{{ user.email }}さん</h1>
+                <p class="lead mb-4">
+                    会員専用ページでは、より詳細な相談や画像付きでの相談が可能です。
+                </p>
+                <div class="d-grid gap-3 d-sm-flex">
+                    <a href="{{ url_for('consultation') }}" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-chat-dots"></i> 相談する
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="features-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">会員専用サービス</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-camera text-primary display-4 mb-3"></i>
+                        <h3 class="card-title h5">画像付き相談</h3>
+                        <p class="card-text">
+                            画像を添付して具体的な相談が可能です。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-clock-history text-primary display-4 mb-3"></i>
+                        <h3 class="card-title h5">相談履歴</h3>
+                        <p class="card-text">
+                            過去の相談内容と回答を確認できます。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-person-circle text-primary display-4 mb-3"></i>
+                        <h3 class="card-title h5">会員情報管理</h3>
+                        <p class="card-text">
+                            会員情報の確認・更新が可能です。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}登録完了{% endblock %}
+{% block content %}
+<div class="alert alert-success">
+    <h4>メールアドレスの確認が完了しました</h4>
+    <p>ログインページからログインしてください。</p>
+    <a href="{{ url_for('login') }}" class="btn btn-primary">ログインページへ</a>
+</div>
+{% endblock %}

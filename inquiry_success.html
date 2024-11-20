@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}お問い合わせ完了{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">お問い合わせ完了</h2>
+                <div class="alert alert-success">
+                    <p class="mb-0">お問い合わせを受け付けました。</p>
+                    <p class="mb-0">内容を確認の上、担当者より連絡させていただきます。</p>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('home') }}" class="btn btn-primary">
+                        トップページへ戻る
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
